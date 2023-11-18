@@ -20,7 +20,7 @@
  * SOFTWARE.
  */
 
-package teamcode;
+/*package teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -55,7 +55,7 @@ import teamcode.vision.Vision;
  * testing purposes. It provides numerous tests for diagnosing problems with the robot. It also provides tools
  * for tuning and calibration.
  */
-@TeleOp(name="FtcTest", group="Ftc3543")
+/*@TeleOp(name="FtcTest", group="Ftc3543")
 public class FtcTest extends FtcTeleOp
 {
     private static final String moduleName = "FtcTest";
@@ -83,7 +83,7 @@ public class FtcTest extends FtcTeleOp
     /**
      * This class stores the test menu choices.
      */
-    private static class TestChoices
+    /*private static class TestChoices
     {
         Test test = Test.SENSORS_TEST;
         double xTarget = 0.0;
@@ -149,7 +149,7 @@ public class FtcTest extends FtcTeleOp
      * This method is called to initialize the robot. In FTC, this is called when the "Init" button on the Driver
      * Station is pressed.
      */
-    @Override
+    /*@Override
     public void robotInit()
     {
         //
@@ -258,7 +258,7 @@ public class FtcTest extends FtcTeleOp
      * @param prevMode specifies the previous RunMode it is coming from (always null for FTC).
      * @param nextMode specifies the next RunMode it is going into.
      */
-    @Override
+   /* @Override
     public void startMode(TrcRobot.RunMode prevMode, TrcRobot.RunMode nextMode)
     {
         final String funcName = "startMode";
@@ -365,7 +365,7 @@ public class FtcTest extends FtcTeleOp
      * @param prevMode specifies the previous RunMode it is coming from.
      * @param nextMode specifies the next RunMode it is going into (always null for FTC).
      */
-    @Override
+    /*@Override
     public void stopMode(TrcRobot.RunMode prevMode, TrcRobot.RunMode nextMode)
     {
         if (testCommand != null)
@@ -390,7 +390,7 @@ public class FtcTest extends FtcTeleOp
      * @param slowPeriodicLoop specifies true if it is running the slow periodic loop on the main robot thread,
      *        false otherwise.
      */
-    @Override
+   /* @Override
     public void periodic(double elapsedTime, boolean slowPeriodicLoop)
     {
         //
@@ -574,7 +574,7 @@ public class FtcTest extends FtcTeleOp
      * @param button specifies the button ID that generates the event
      * @param pressed specifies true if the button is pressed, false otherwise.
      */
-    @Override
+   /* @Override
     public void driverButtonEvent(TrcGameController gamepad, int button, boolean pressed)
     {
         if (allowButtonControl() || testChoices.test == Test.VISION_TEST ||
@@ -808,7 +808,7 @@ public class FtcTest extends FtcTeleOp
      * @param button specifies the button ID that generates the event
      * @param pressed specifies true if the button is pressed, false otherwise.
      */
-    @Override
+   /* @Override
     public void operatorButtonEvent(TrcGameController gamepad, int button, boolean pressed)
     {
         if (allowButtonControl())
@@ -858,7 +858,7 @@ public class FtcTest extends FtcTeleOp
     /**
      * This method displays the current color thresholds on the dashboard.
      */
-    private void updateColorThresholds()
+   /* private void updateColorThresholds()
     {
         robot.dashboard.displayPrintf(7, "Thresholds: %s", Arrays.toString(colorThresholds));
     }   //updateColorThresholds
@@ -866,7 +866,7 @@ public class FtcTest extends FtcTeleOp
     /**
      * This method creates and displays the test menus and record the selected choices.
      */
-    private void doTestMenus()
+    /*private void doTestMenus()
     {
         //
         // Create menus.
@@ -971,7 +971,7 @@ public class FtcTest extends FtcTeleOp
      * @param test specifies the selected test.
      * @return tune PID controller.
      */
-    private TrcPidController getTunePidController(Test test)
+    /*private TrcPidController getTunePidController(Test test)
     {
         TrcPidController pidCtrl;
 
@@ -1001,7 +1001,7 @@ public class FtcTest extends FtcTeleOp
      *
      * @return start Kp value of the PID controller being tuned.
      */
-    private double getTuneKp()
+   /* private double getTuneKp()
     {
         double value = 0.0;
         TrcPidController tunePidCtrl = getTunePidController(testMenu.getCurrentChoiceObject());
@@ -1019,7 +1019,7 @@ public class FtcTest extends FtcTeleOp
      *
      * @return start Ki value of the PID controller being tuned.
      */
-    private double getTuneKi()
+   /* private double getTuneKi()
     {
         double value = 0.0;
         TrcPidController tunePidCtrl = getTunePidController(testMenu.getCurrentChoiceObject());
@@ -1037,7 +1037,7 @@ public class FtcTest extends FtcTeleOp
      *
      * @return start Kd value of the PID controller being tuned.
      */
-    private double getTuneKd()
+   /* private double getTuneKd()
     {
         double value = 0.0;
         TrcPidController tunePidCtrl = getTunePidController(testMenu.getCurrentChoiceObject());
@@ -1055,7 +1055,7 @@ public class FtcTest extends FtcTeleOp
      *
      * @return start Kf value of the PID controller being tuned.
      */
-    double getTuneKf()
+   /* double getTuneKf()
     {
         double value = 0.0;
         TrcPidController tunePidCtrl = getTunePidController(testMenu.getCurrentChoiceObject());
@@ -1073,7 +1073,7 @@ public class FtcTest extends FtcTeleOp
      * if all sensors are working properly. For encoders, since test sensor mode is also teleop mode, you can
      * operate the gamepads to turn the motors and check the corresponding encoder counts.
      */
-    private void doSensorsTest()
+  /*  private void doSensorsTest()
     {
         int lineNum = 9;
         //
@@ -1120,7 +1120,7 @@ public class FtcTest extends FtcTeleOp
     /**
      * This method calls vision code to detect target objects and display their info.
      */
-    private void doVisionTest()
+   /* private void doVisionTest()
     {
         if (robot.vision != null)
         {
@@ -1179,7 +1179,7 @@ public class FtcTest extends FtcTeleOp
      *
      * @return true to allow and false otherwise.
      */
-    private boolean allowTeleOp()
+   /* private boolean allowTeleOp()
     {
         return teleOpControlEnabled && robot.robotDrive != null &&
                (testChoices.test == Test.SUBSYSTEMS_TEST || testChoices.test == Test.DRIVE_SPEED_TEST);
@@ -1190,7 +1190,7 @@ public class FtcTest extends FtcTeleOp
      *
      * @return true to allow and false otherwise.
      */
-    private boolean allowButtonControl()
+   /* private boolean allowButtonControl()
     {
         return robot.robotDrive != null &&
                (testChoices.test == Test.SUBSYSTEMS_TEST ||
@@ -1199,3 +1199,5 @@ public class FtcTest extends FtcTeleOp
     }   //allowButtonControl
 
 }   //class FtcTest
+
+    */
