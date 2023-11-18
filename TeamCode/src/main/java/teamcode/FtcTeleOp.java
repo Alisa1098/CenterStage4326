@@ -34,6 +34,13 @@ import TrcFtcLib.ftclib.FtcGamepad;
 import TrcFtcLib.ftclib.FtcOpMode;
 import teamcode.drivebases.SwerveDrive;
 
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.Range;
+import com.qualcomm.robotcore.hardware.Servo;
+
 /**
  * This class contains the TeleOp Mode program.
  */
@@ -54,6 +61,26 @@ public class FtcTeleOp extends FtcOpMode
     private boolean pixelTrayUpperGateOpened = false;
     private boolean wristUp = false;
 
+    //declare stuff initiated later
+    DcMotor LeftFront;
+    DcMotor LeftBack;
+    DcMotor RightFront;
+    DcMotor RightBack;
+
+    //
+    Servo OpenSally;
+    boolean isOpen;
+    Servo WristSally;
+    Servo AirplaneSally;
+
+    //lift motor
+    DcMotor LiftMotor;
+    boolean isPulling;
+
+    //Direction stuff:
+    private DcMotor.Direction LEFTDIRECTION = DcMotor.Direction.REVERSE;
+    private DcMotor.Direction RIGHTDIRECTION = DcMotor.Direction.FORWARD;
+
     //
     // Implements FtcOpMode abstract method.
     //
@@ -68,6 +95,31 @@ public class FtcTeleOp extends FtcOpMode
         //
         // Create and initialize robot object.
         //
+        //Hardware mapping
+
+        //wheel motors:
+        LeftFront = hardwareMap.dcMotor.get("Left Front");
+        LeftBack = hardwareMap.dcMotor.get("Left Back");
+        RightFront = hardwareMap.dcMotor.get("Right Front");
+        RightBack = hardwareMap.dcMotor.get("Right Back");
+        //servo:
+        //Sally = hardwareMap.servo.get("Sally");
+        //lift motor:
+        LiftMotor = hardwareMap.dcMotor.get("Lift Motor");
+
+        //setting directions of wheels
+        LeftBack.setDirection(LEFTDIRECTION);
+        LeftFront.setDirection(LEFTDIRECTION);
+        RightBack.setDirection(RIGHTDIRECTION);
+        RightFront.setDirection(RIGHTDIRECTION);
+
+        //states for the servos
+        //the claw:
+        isOpen = false;
+
+        //the pully:
+        isPulling = false;
+
         robot = new Robot(TrcRobot.getRunMode());
         //
         // Open trace log.
@@ -82,6 +134,7 @@ public class FtcTeleOp extends FtcOpMode
         //
         // Create and initialize Gamepads.
         //
+
         driverGamepad = new FtcGamepad("DriverGamepad", gamepad1, this::driverButtonEvent);
         operatorGamepad = new FtcGamepad("OperatorGamepad", gamepad2, this::operatorButtonEvent);
         driverGamepad.setYInverted(true);
@@ -104,6 +157,7 @@ public class FtcTeleOp extends FtcOpMode
     @Override
     public void startMode(TrcRobot.RunMode prevMode, TrcRobot.RunMode nextMode)
     {
+
         final String funcName = "startMode";
 
         if (robot.globalTracer.isTraceLogOpened())
@@ -211,6 +265,7 @@ public class FtcTeleOp extends FtcOpMode
                         robot.elevatorArm.elevatorSetPidPower(
                             null, elevatorPower, RobotParams.ELEVATOR_MIN_POS, RobotParams.ELEVATOR_MAX_POS);
                     }
+
                     // Arm subsystem.
                     double armPower = operatorGamepad.getRightStickY(true) * RobotParams.ARM_POWER_LIMIT;
                     if (manualOverride)
