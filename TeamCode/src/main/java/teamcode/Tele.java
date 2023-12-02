@@ -63,8 +63,11 @@ public class Tele extends OpMode {
 
     private DcMotor pully;
 
-    private Servo SallyTheClaw;
-    boolean isOpen = false;
+    private Servo SallyTheRClaw;
+    boolean isOpenR = false;
+
+    private Servo SallyTheLClaw;
+    boolean isOpenL = false;
 
     boolean low_sens = false;
 
@@ -91,7 +94,11 @@ public class Tele extends OpMode {
         backRight.setDirection(DcMotor.Direction.REVERSE);
 
         //Claw initializing
-        SallyTheClaw= hardwareMap.get(Servo.class, "claw");
+        SallyTheRClaw= hardwareMap.get(Servo.class, "Rclaw");
+        SallyTheLClaw= hardwareMap.get(Servo.class, "Lclaw");
+
+        //Pully initializing - UNCOMMENT THIS ONCE A 5TH MOTOR IS CONNECTED TO THE CONTROL HUB
+        //pully = hardwareMap.get(DcMotor.class, "lift");
 
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
@@ -156,20 +163,37 @@ public class Tele extends OpMode {
 
         // pully for the lift:
 
-        pully.setPower(.5 * ((double) gamepad1.right_trigger - (double) gamepad1.left_trigger));
+        //pully.setPower(.5 * ((double) gamepad1.right_trigger - (double) gamepad1.left_trigger));
 
         //claw:
-        if(isOpen == true  && gamepad1.left_bumper == true) {
-            SallyTheClaw.setPosition(1);
+        if(isOpenL == true  && gamepad1.left_bumper == true) {
+            SallyTheLClaw.setPosition(1);
             wait(500);
-            SallyTheClaw.setPosition(0);
-            isOpen = false;
+            SallyTheLClaw.setPosition(0);
+            isOpenL = false;
 
         }
-        if (isOpen == false && gamepad1.right_bumper == true) {
-            SallyTheClaw.setPosition(1);
+
+        if(isOpenR == true  && gamepad1.right_bumper == true) {
+            SallyTheRClaw.setPosition(1);
             wait(500);
-            isOpen = true;
+            SallyTheRClaw.setPosition(0);
+            isOpenR = false;
+
+        }
+
+        //CHECK W/ DRIVERS AND HARDWARE IF PRESSING SAME BUTTON TO OPEN AND CLOSE IS OK
+        //OR SHOULD I ASSIGN OTHER BUTTONS?
+        if (isOpenL == false && gamepad1.left_bumper == true) {
+            SallyTheLClaw.setPosition(1);
+            wait(500);
+            isOpenL = true;
+        }
+
+        if (isOpenR == false && gamepad1.right_bumper == true) {
+            SallyTheRClaw.setPosition(1);
+            wait(500);
+            isOpenR = true;
         }
 
     }
